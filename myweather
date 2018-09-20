@@ -1,0 +1,38 @@
+#!/bin/bash
+
+from weather import Weather , Unit
+
+# user inputs city
+# otherwis,e defaults to miami
+def defineCity():
+	userInput = input("What city: ")
+	if userInput is "":
+		userInput = "miami"
+	return userInput
+
+
+weather = Weather(unit=Unit.FAHRENHEIT)
+location = weather.lookup_by_location(defineCity())
+condition = location.condition
+forecast = location.forecast[0]
+temp = condition.temp
+city = location.location
+
+
+# formats the output of forecast.day into full name of day
+# ex. Mon -> Monday or Fri -> Friday...
+def formatDay(myDay):
+	days = {'Mon':'Monday', 'Tue':'Tuesday', 'Wed':'Wednesday',
+	 'Thu':'Thursday', 'Fri':'Friday', 'Sat':'Saturday', 'Sun':'Sunday'}
+	return days[myDay]
+
+
+
+print ("Today is: "+formatDay(forecast.day))
+print (forecast.date)
+print (city.city)
+print ("Currently it is " + condition.text)
+print ("Temperature: "+temp+"F")
+print ("The forecast for the day is " + forecast.text)
+print ("Temperatures as high as " + forecast.high+"F")
+print ("Teperatures as low as "+forecast.low+"F")
